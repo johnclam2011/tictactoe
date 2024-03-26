@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Game Naughts and Crosses</title>
+    <style>
+        .box {
+            width: 100px;
+            height: 100px;
+            border: 1px solid black;
+            display: inline-block;
+            text-align: center;
+            line-height: 100px;
+            font-size: 25px;
+        }
+
+        .box:hover {
+            background-color: #ddd;
+        }
+
+        .playerBoard {
+            margin: 0 auto;
+            margin-top: 100px;
+        }
+    </style>
+</head>
+<body>
+    <table class="playerBoard">
+      <tr>
+        <td colspan="3" id="result"></td>
+      </tr>
+      <tr>
+        <td class="box" onClick="clickMove(this)"></td>
+        <td class="box" onClick="clickMove(this)"></td>
+        <td class="box" onClick="clickMove(this)"></td>
+      </tr>
+      <tr>
+        <td class="box" onClick="clickMove(this)"></td>
+        <td class="box" onClick="clickMove(this)"></td>
+        <td class="box" onClick="clickMove(this)"></td>
+      </tr>
+      <tr>
+        <td class="box" onClick="clickMove(this)"></td>
+        <td class="box" onClick="clickMove(this)"></td>
+        <td class="box" onClick="clickMove(this)"></td>
+      </tr>
+    </table>
+
+    <script>
+
+      var boxes = document.querySelectorAll('.box');
+
+      var thisPlayer = 'X';
+      var isOver = false;
+
+      function clickMove(thisData){
+
+        if (isOver || thisData.innerText !== '') {
+          return;
+        }else{
+          thisData.innerText = thisPlayer;
+          var champion = processGame();
+
+          if (champion) {
+            document.getElementById('result').innerText = "The Winner is Player " + thisPlayer;
+            isOver = true;
+          } else if (checkBoxes()) {
+              document.getElementsByClassName('champ').innerText = "DRAW";
+              isOver = true;
+          } else {
+            thisPlayer = thisPlayer === 'X' ? 'O' : 'X';
+          }
+        }
+
+        
+
+      }
+
+      function processGame() {
+          const combinations = [ [0, 1, 2], [3, 4, 5], [6, 7, 8],[0, 3, 6], [1, 4, 7], [2, 5, 8],[0, 4, 8], [2, 4, 6] ];
+
+          for (var combination of combinations) {
+              var [a, b, c] = combination;
+              if (boxes[a].innerText && boxes[a].innerText === boxes[b].innerText && boxes[a].innerText === boxes[c].innerText) {
+                  return true;
+              }
+          }
+          return false;
+      }
+
+      function checkBoxes() {
+        for (var i = 0; i < boxes.length; i++) {
+          if(boxes[i].innerText == ''){
+            return false;
+          }
+        }
+
+        return true;
+      }
+
+    </script>
+</body>
+</html>
