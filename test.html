@@ -48,9 +48,9 @@
     <script>
 
       var boxes = document.querySelectorAll('.box');
-
-      var thisPlayer = 'X';
       var isOver = false;
+      var thisPlayer = 'X';
+      
 
       function clickMove(thisData){
 
@@ -64,7 +64,7 @@
             document.getElementById('result').innerText = "The Winner is Player " + thisPlayer;
             isOver = true;
           } else if (checkBoxes()) {
-              document.getElementsByClassName('champ').innerText = "DRAW";
+              document.getElementById('result').innerText = "DRAW";
               isOver = true;
           } else {
             thisPlayer = thisPlayer === 'X' ? 'O' : 'X';
